@@ -8,11 +8,7 @@ class FollowUpCard extends StatelessWidget {
   final FollowUpModel followUp;
   final VoidCallback onTap;
 
-  const FollowUpCard({
-    super.key,
-    required this.followUp,
-    required this.onTap,
-  });
+  const FollowUpCard({super.key, required this.followUp, required this.onTap});
 
   Color _getStatusColor() {
     switch (followUp.status) {
@@ -31,9 +27,7 @@ class FollowUpCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
         onTap: onTap,
@@ -46,7 +40,7 @@ class FollowUpCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    followUp.reason,
+                    followUp.leadId,
                     style: AppTextStyles.subtitle.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -59,10 +53,7 @@ class FollowUpCard extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: _getStatusColor().withOpacity(0.1),
                       borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: _getStatusColor(),
-                        width: 1,
-                      ),
+                      border: Border.all(color: _getStatusColor(), width: 1),
                     ),
                     child: Text(
                       followUp.status,

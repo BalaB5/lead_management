@@ -1,4 +1,3 @@
-// add_followup_page.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
@@ -27,6 +26,7 @@ class _AddFollowUpPageState extends State<AddFollowUpPage> {
   
   String _selectedStatus = 'Scheduled';
   DateTime _selectedDate = DateTime.now();
+  TimeOfDay _selectedTime = TimeOfDay.now();
   LeadModel? _selectedLead;
 
   final List<String> _statuses = [
@@ -44,12 +44,32 @@ class _AddFollowUpPageState extends State<AddFollowUpPage> {
     super.dispose();
   }
 
+  Future<void> _selectTime() async {
+    final TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialTime: _selectedTime,
+    );
+    if (picked != null && picked != _selectedTime) {
+      setState(() {
+        _selectedTime = picked;
+      });
+    }
+  }
+
   Future<void> _submitForm() async {
     if (_formKey.currentState!.validate() && _selectedLead != null) {
+      final followUpDateTime = DateTime(
+        _selectedDate.year,
+        _selectedDate.month,
+        _selectedDate.day,
+        _selectedTime.hour,
+        _selectedTime.minute,
+      );
+
       final newFollowUp = FollowUpModel(
         id: DateTime.now().millisecondsSinceEpoch.toString(),
         leadId: _selectedLead!.id,
-        followUpDate: _selectedDate,
+        followUpDate: followUpDateTime,
         reason: _reasonController.text,
         status: _selectedStatus,
         notes: _notesController.text,
@@ -93,27 +113,29 @@ class _AddFollowUpPageState extends State<AddFollowUpPage> {
               ),
               const SizedBox(height: 8),
               if (_selectedLead == null)
-                Obx(() {
-                  final leads = _controller.searchLeadsForFollowUp(
-                    _leadSearchController.text);
-                  
-                  if (leads.isEmpty && _leadSearchController.text.isNotEmpty) {
-                    return const Text('No leads found');
-                  }
-                  
-                  return Column(
-                    children: leads.map((lead) => ListTile(
-                      title: Text(lead.name),
-                      subtitle: Text(lead.phone),
-                      onTap: () {
-                        setState(() {
-                          _selectedLead = lead;
-                          _leadSearchController.text = lead.name;
-                        });
-                      },
-                    )).toList(),
-                  );
-                }),
+                Builder(
+                  builder: (context) {
+                    final leads = _controller.searchLeadsForFollowUp(
+                      _leadSearchController.text);
+                    
+                    if (leads.isEmpty && _leadSearchController.text.isNotEmpty) {
+                      return const Text('No leads found');
+                    }
+                    
+                    return Column(
+                      children: leads.map((lead) => ListTile(
+                        title: Text(lead.name),
+                        subtitle: Text(lead.phone),
+                        onTap: () {
+                          setState(() {
+                            _selectedLead = lead;
+                            _leadSearchController.text = lead.name;
+                          });
+                        },
+                      )).toList(),
+                    );
+                  },
+                ),
               if (_selectedLead != null)
                 Card(
                   child: Padding(
@@ -149,7 +171,7 @@ class _AddFollowUpPageState extends State<AddFollowUpPage> {
                 ),
               const SizedBox(height: 16),
               Text(
-                'Follow Up Date',
+                'Follow Up Date & Time',
                 style: AppTextStyles.subtitle.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -165,6 +187,18 @@ class _AddFollowUpPageState extends State<AddFollowUpPage> {
                       setState(() => _selectedDate = args.value);
                     }
                   },
+                ),
+              ),
+              const SizedBox(height: 8),
+              ListTile(
+                leading: const Icon(Icons.access_time),
+                title: Text(
+                  'Time: ${_selectedTime.format(context)}',
+                  style: AppTextStyles.body,
+                ),
+                trailing: IconButton(
+                  icon: const Icon(Icons.edit),
+                  onPressed: _selectTime,
                 ),
               ),
               const SizedBox(height: 16),

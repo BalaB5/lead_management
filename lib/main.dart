@@ -37,9 +37,9 @@ class MyApp extends StatelessWidget {
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.light,
       debugShowCheckedModeBanner: false,
-      // initialRoute: Routes.LEADS,
-      //  initialBinding: AppBinding(),
-      // getPages: AppPages.pages,
+      initialRoute: Routes.HOME,
+       initialBinding: AppBinding(),
+      getPages: AppPages.pages,
     );
   }
 }
