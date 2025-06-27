@@ -18,3 +18,4 @@ class AppBinding implements Bindings {
     Get.lazyPut(() => FollowUpController(), fenix: true);
   }
 }
+
