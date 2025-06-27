@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import '../../controller/lead_controller.dart';
 import '../../core/app_theme.dart';
 import '../../models/lead_model.dart';
+import '../widgets/app_button.dart';
+import '../widgets/app_text_field.dart';
 
 class AddLeadPage extends StatefulWidget {
   const AddLeadPage({super.key});

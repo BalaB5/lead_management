@@ -27,6 +27,8 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -35,9 +37,9 @@ class MyApp extends StatelessWidget {
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.light,
       debugShowCheckedModeBanner: false,
-      initialRoute: Routes.LEADS,
-       initialBinding: AppBinding(),
-      getPages: AppPages.pages,
+      // initialRoute: Routes.LEADS,
+      //  initialBinding: AppBinding(),
+      // getPages: AppPages.pages,
     );
   }
 }

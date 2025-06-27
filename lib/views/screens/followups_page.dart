@@ -5,7 +5,10 @@ import 'package:get/get.dart';
 import '../../controller/followup_controller.dart';
 import '../../core/app_theme.dart';
 import '../../models/followup_model.dart';
+import '../widgets/app_text_field.dart';
+import '../widgets/empty_state.dart';
 import '../widgets/followup_card.dart';
+import '../widgets/followup_detail_page.dart';
 
 class FollowUpsPage extends GetView<FollowUpController> {
   const FollowUpsPage({super.key});

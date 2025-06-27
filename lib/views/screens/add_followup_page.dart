@@ -7,6 +7,8 @@ import '../../controller/followup_controller.dart';
 import '../../core/app_theme.dart';
 import '../../models/followup_model.dart';
 import '../../models/lead_model.dart';
+import '../widgets/app_button.dart';
+import '../widgets/app_text_field.dart';
 
 class AddFollowUpPage extends StatefulWidget {
   const AddFollowUpPage({super.key});
